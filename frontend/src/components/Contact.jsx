@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle, AlertCircle, Mail, Phone, MapPin, Youtube, Linkedin, Github } from 'lucide-react';
+import { Send, CheckCircle, AlertCircle, Mail, Phone, MapPin, MessageSquare } from 'lucide-react';
 
 export default function Contact() {
+  const [activeMap, setActiveMap] = useState('home'); // 'home' or 'sports'
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,6 +14,28 @@ export default function Contact() {
     success: null,
     error: null
   });
+
+  const templates = {
+    interview: {
+      label: '📅 Schedule Interview',
+      text: 'Hi Rahul, I am an HR/Recruiter. I reviewed your Snorkel-style portfolio and would love to schedule a 15-minute introductory call to discuss software engineering roles at our company.'
+    },
+    techStack: {
+      label: '💬 Technical Chat',
+      text: 'Hi Rahul, I wanted to discuss your experience working with Node.js, Redis, and Kafka in banking systems, and check your technical availability.'
+    },
+    general: {
+      label: '✉️ General Inquiry',
+      text: 'Hi Rahul, I have a quick question about your Data Structures & Algorithms (DSA) YouTube tutorials or portfolio features...'
+    }
+  };
+
+  const selectTemplate = (key) => {
+    setFormData({
+      ...formData,
+      message: templates[key].text
+    });
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -60,67 +83,119 @@ export default function Contact() {
     }
   };
 
+  // Google Map embed URLs
+  const maps = {
+    home: 'https://maps.google.com/maps?q=Sector%2094%20JLPL%20Mohali&t=&z=14&ie=UTF8&iwloc=&output=embed',
+    sports: 'https://maps.google.com/maps?q=Sector%2070%20Sports%20Complex%20Phase%207%20Mohali&t=&z=14&ie=UTF8&iwloc=&output=embed'
+  };
+
   return (
     <section id="contact" className="contact-section">
       <div className="container">
         <span className="section-tag">Connection Hub</span>
         <h2 className="section-title">Get In Touch</h2>
         <p className="section-subtitle">
-          Have an interesting project, job opportunity, or simply want to talk tech? Shoot me a message and let's connect.
+          Have an interesting project, job opportunity, or simply want to talk tech? Select a recruiter quick-template or shoot a direct message.
         </p>
 
         <div className="contact-grid">
           {/* Info Column */}
           <div className="contact-info-panel">
-            <h3 className="info-title">Rahul Garg</h3>
-            <p className="info-desc">
-              Mid-Level Software Engineer & Technical Content Educator. Focused on scalability, databases, and microservices.
-            </p>
+            <div>
+              <h3 className="info-title">Rahul Garg</h3>
+              <p className="info-desc">
+                Mid-Level Software Engineer & Technical Educator. Focused on scalability, databases, and microservices.
+              </p>
 
-            <div className="info-details">
-              <div className="info-item">
-                <Mail className="info-icon" size={18} />
-                <div className="info-text">
-                  <span className="info-label">Email</span>
-                  <a href="mailto:gargr0109@gmail.com" className="info-val">gargr0109@gmail.com</a>
+              <div className="info-details">
+                <div className="info-item">
+                  <Mail className="info-icon" size={18} />
+                  <div className="info-text">
+                    <span className="info-label">Email</span>
+                    <a href="mailto:gargr0109@gmail.com" className="info-val">gargr0109@gmail.com</a>
+                  </div>
                 </div>
-              </div>
 
-              <div className="info-item">
-                <Phone className="info-icon" size={18} />
-                <div className="info-text">
-                  <span className="info-label">Phone</span>
-                  <a href="tel:+917807221279" className="info-val">+91 78072 21279</a>
+                <div className="info-item">
+                  <Phone className="info-icon" size={18} />
+                  <div className="info-text">
+                    <span className="info-label">Phone & Call</span>
+                    <a href="tel:+917807221279" className="info-val">+91 78072 21279</a>
+                  </div>
                 </div>
-              </div>
 
-              <div className="info-item">
-                <MapPin className="info-icon" size={18} />
-                <div className="info-text">
-                  <span className="info-label">Address</span>
-                  <span className="info-val">Chandigarh IT Park, India</span>
+                <div className="info-item">
+                  <MapPin className="info-icon" size={18} />
+                  <div className="info-text">
+                    <span className="info-label">Address</span>
+                    <span className="info-val">Chandigarh IT Park, India</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="info-socials">
-              <a href="https://github.com" target="_blank" rel="noreferrer" className="social-badge-btn" title="GitHub">
-                <Github size={18} />
-                <span>GitHub</span>
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="social-badge-btn" title="LinkedIn">
-                <Linkedin size={18} />
-                <span>LinkedIn</span>
-              </a>
-              <a href="https://youtube.com" target="_blank" rel="noreferrer" className="social-badge-btn" title="YouTube Channel">
-                <Youtube size={18} />
-                <span>YouTube</span>
-              </a>
+            {/* Direct Pings & Interactive Map */}
+            <div className="outreach-map-container">
+              <div className="map-tabs">
+                <button 
+                  className={`map-tab-btn ${activeMap === 'home' ? 'active' : ''}`}
+                  onClick={() => setActiveMap('home')}
+                >
+                  🏠 JLPL Sec 94
+                </button>
+                <button 
+                  className={`map-tab-btn ${activeMap === 'sports' ? 'active' : ''}`}
+                  onClick={() => setActiveMap('sports')}
+                >
+                  🏸 Phase 7 Court
+                </button>
+              </div>
+
+              <div className="embedded-map-card">
+                <iframe
+                  title="Rahul Garg Location Coordinates"
+                  src={maps[activeMap]}
+                  width="100%"
+                  height="160"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                ></iframe>
+              </div>
+
+              <div className="outreach-buttons" style={{ marginTop: '16px' }}>
+                <a 
+                  href="https://wa.me/917807221279?text=Hi%20Rahul%2C%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20connect%20with%20you%20regarding%20a%20software%20engineering%20role%20at%20our%20firm!" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="btn-whatsapp"
+                >
+                  <MessageSquare size={16} />
+                  <span>WhatsApp Recruit Ping</span>
+                </a>
+              </div>
             </div>
           </div>
 
           {/* Form Column */}
           <div className="contact-form-panel">
+            {/* Quick Templates Selection */}
+            <div className="template-pills-area">
+              <span className="template-label">⚡ Select Message Draft Template:</span>
+              <div className="template-pills">
+                {Object.keys(templates).map((key) => (
+                  <button
+                    key={key}
+                    type="button"
+                    className="template-pill"
+                    onClick={() => selectTemplate(key)}
+                  >
+                    {templates[key].label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <form onSubmit={handleSubmit} className="contact-form">
               <div className="form-row">
                 <div className="form-group">
@@ -288,31 +363,74 @@ export default function Contact() {
           text-decoration: underline;
         }
 
-        .info-socials {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-        }
-
-        .social-badge-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
+        /* Map and Outreach container */
+        .outreach-map-container {
           background-color: #ffffff;
           border: 1px solid var(--border-color);
-          padding: 8px 16px;
-          border-radius: 100px;
-          font-size: 13px;
-          font-weight: 500;
-          text-decoration: none;
+          border-radius: 12px;
+          padding: 20px;
+          box-shadow: 0 4px 12px rgba(17, 28, 45, 0.02);
+        }
+
+        .map-tabs {
+          display: flex;
+          gap: 8px;
+          margin-bottom: 12px;
+        }
+
+        .map-tab-btn {
+          background-color: var(--bg-primary);
+          border: 1px solid var(--border-color);
+          border-radius: 4px;
+          padding: 6px 12px;
+          font-size: 11px;
+          font-weight: 600;
           color: var(--text-muted-dark);
+          cursor: pointer;
           transition: var(--transition-fast);
         }
 
-        .social-badge-btn:hover {
-          color: var(--accent-purple);
-          border-color: rgba(94, 90, 209, 0.3);
-          background-color: rgba(94, 90, 209, 0.04);
+        .map-tab-btn:hover {
+          color: var(--text-dark);
+        }
+
+        .map-tab-btn.active {
+          background-color: var(--bg-dark);
+          color: var(--text-light);
+          border-color: var(--bg-dark);
+        }
+
+        .embedded-map-card {
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          overflow: hidden;
+        }
+
+        .outreach-buttons {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .btn-whatsapp {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          background-color: #25d366;
+          color: #ffffff;
+          padding: 12px 24px;
+          border-radius: 100px;
+          font-size: 14px;
+          font-weight: 600;
+          text-decoration: none;
+          transition: var(--transition-normal);
+          box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+        }
+
+        .btn-whatsapp:hover {
+          background-color: #20ba56;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
         }
 
         /* Form styling */
@@ -322,6 +440,45 @@ export default function Contact() {
           border-radius: 12px;
           padding: 40px;
           box-shadow: 0 10px 30px -10px rgba(17, 28, 45, 0.03);
+        }
+
+        .template-pills-area {
+          margin-bottom: 24px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .template-label {
+          font-family: var(--font-mono);
+          font-size: 11px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          color: var(--text-muted-dark);
+        }
+
+        .template-pills {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+
+        .template-pill {
+          background-color: var(--bg-primary);
+          border: 1px solid var(--border-color);
+          border-radius: 6px;
+          padding: 6px 12px;
+          font-size: 12px;
+          color: var(--text-dark);
+          cursor: pointer;
+          transition: var(--transition-fast);
+        }
+
+        .template-pill:hover {
+          border-color: var(--accent-purple);
+          background-color: rgba(94, 90, 209, 0.06);
+          color: var(--accent-purple);
         }
 
         .contact-form {

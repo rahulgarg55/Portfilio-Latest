@@ -115,6 +115,26 @@ const mockProjects = [
     github: "https://github.com",
     category: "Full Stack",
     sort_order: 5
+  },
+  {
+    id: 6,
+    title: "Zapier, Google Calendar & Office 365 Automation",
+    description: "Enterprise workflow automation pipeline connecting Google Calendar API and Microsoft 365 Excel/Word directories with Node.js and Zapier Webhooks for automated task triggering.",
+    tags: "Node.js, Zapier, Webhooks, Google APIs, Microsoft 365",
+    link: null,
+    github: null,
+    category: "Integrations",
+    sort_order: 6
+  },
+  {
+    id: 7,
+    title: "Food Store E-Commerce Platform",
+    description: "A full-featured food ordering application with shopping cart functionalities, custom payment gateway processing, and role-based restaurant admin management consoles.",
+    tags: "React, Node.js, Express, MongoDB, Payment APIs",
+    link: null,
+    github: "https://github.com",
+    category: "Full Stack",
+    sort_order: 7
   }
 ];
 

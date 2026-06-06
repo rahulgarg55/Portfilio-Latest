@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Github, Linkedin, Youtube } from 'lucide-react';
 
-export default function Navbar() {
+export default function Navbar({ recruiterMode, onToggleRecruiterMode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -44,6 +44,29 @@ export default function Navbar() {
           <a href="https://youtube.com" target="_blank" rel="noreferrer" className="social-icon-btn" title="YouTube Channel">
             <Youtube size={18} />
           </a>
+          <div className="mode-segmented-control" style={{ marginRight: '12px' }}>
+            <button 
+              onClick={() => onToggleRecruiterMode('visual')}
+              className={`mode-btn ${recruiterMode === 'visual' ? 'active' : ''}`}
+              title="Switch to Simple Visual Portfolio"
+            >
+              🔮 Visual
+            </button>
+            <button 
+              onClick={() => onToggleRecruiterMode('technical')}
+              className={`mode-btn ${recruiterMode === 'technical' ? 'active' : ''}`}
+              title="Switch to Full Architectural Technical Depth Mode"
+            >
+              ⚙️ Tech Depth
+            </button>
+            <button 
+              onClick={() => onToggleRecruiterMode('recruiter')}
+              className={`mode-btn ${recruiterMode === 'recruiter' ? 'active' : ''}`}
+              title="Switch to Print-friendly PDF Resume View"
+            >
+              📄 CV Mode
+            </button>
+          </div>
           <a href="#contact" className="btn btn-primary btn-sm-nav">Get In Touch</a>
         </div>
 
@@ -74,7 +97,26 @@ export default function Navbar() {
                 <Youtube size={20} />
               </a>
             </div>
-            
+            <div className="mobile-mode-selectors" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '16px' }}>
+              <button 
+                onClick={() => { onToggleRecruiterMode('visual'); setIsOpen(false); }} 
+                className={`btn ${recruiterMode === 'visual' ? 'btn-primary' : 'btn-secondary'}`}
+              >
+                🔮 Visual Mode
+              </button>
+              <button 
+                onClick={() => { onToggleRecruiterMode('technical'); setIsOpen(false); }} 
+                className={`btn ${recruiterMode === 'technical' ? 'btn-primary' : 'btn-secondary'}`}
+              >
+                ⚙️ Technical Depth Mode
+              </button>
+              <button 
+                onClick={() => { onToggleRecruiterMode('recruiter'); setIsOpen(false); }} 
+                className={`btn ${recruiterMode === 'recruiter' ? 'btn-primary' : 'btn-secondary'}`}
+              >
+                📄 Quick PDF CV Mode
+              </button>
+            </div>
             <a href="#contact" className="btn btn-primary" onClick={() => setIsOpen(false)}>Get In Touch</a>
           </div>
         </div>
@@ -215,6 +257,38 @@ export default function Navbar() {
           .mobile-toggle {
             display: block;
           }
+        }
+
+        /* Segmented Mode Controller */
+        .mode-segmented-control {
+          display: flex;
+          background-color: rgba(17, 28, 45, 0.05);
+          border: 1px solid var(--border-color);
+          border-radius: 100px;
+          padding: 3px;
+        }
+
+        .mode-btn {
+          background: none;
+          border: none;
+          padding: 6px 14px;
+          font-family: var(--font-sans);
+          font-size: 11px;
+          font-weight: 600;
+          color: var(--text-muted-dark);
+          border-radius: 100px;
+          cursor: pointer;
+          transition: var(--transition-fast);
+        }
+
+        .mode-btn:hover {
+          color: var(--text-dark);
+        }
+
+        .mode-btn.active {
+          background-color: var(--bg-dark);
+          color: var(--text-light);
+          box-shadow: 0 2px 8px rgba(17, 28, 45, 0.15);
         }
       `}</style>
     </nav>

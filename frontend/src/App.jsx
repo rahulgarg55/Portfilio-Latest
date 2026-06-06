@@ -1,11 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
 import Experience from './components/Experience';
+import SystemSandbox from './components/SystemSandbox';
 import Projects from './components/Projects';
+import SqlSandbox from './components/SqlSandbox';
 import Skills from './components/Skills';
+import Interests from './components/Interests';
 import Contact from './components/Contact';
+import Chatbot from './components/Chatbot';
+import QuestTracker from './components/QuestTracker';
+import TerminalSandbox from './components/TerminalSandbox';
+import LeetcodeDashboard from './components/LeetcodeDashboard';
+import BuildSimulator from './components/BuildSimulator';
+import RecruiterModeView from './components/RecruiterModeView';
+import SkeletonLoader from './components/SkeletonLoader';
+import LiveCodeShowcase from './components/LiveCodeShowcase';
+import ArchitectureFlow from './components/ArchitectureFlow';
+import AchievementTrophyRoom from './components/AchievementTrophyRoom';
+import CareerTimeline3D from './components/CareerTimeline3D';
+import RecruiterCTA from './components/RecruiterCTA';
+import MagneticCursor from './components/MagneticCursor';
+import SkillRadarChart from './components/SkillRadarChart';
+import GitHubHeatmap from './components/GitHubHeatmap';
+import TechStackComparison from './components/TechStackComparison';
+import SalaryBenchmark from './components/SalaryBenchmark';
+import MultimediaShowcase from './components/MultimediaShowcase';
+import InterviewPrep from './components/InterviewPrep';
+import ScrollProgress from './components/ScrollProgress';
+import DevelopmentWorkflow from './components/DevelopmentWorkflow';
+import LiveActivityFeed from './components/LiveActivityFeed';
+import TestimonialsCarousel from './components/TestimonialsCarousel';
+import PerformanceDashboard from './components/PerformanceDashboard';
+import ResumeDownload from './components/ResumeDownload';
+import KonamiEasterEgg from './components/KonamiEasterEgg';
+import SkillNetworkGraph from './components/SkillNetworkGraph';
+
+// Code Splitting / Lazy Loading for analytical sandboxes
+const WarRoom = lazy(() => import('./components/WarRoom'));
+const SystemBlueprints = lazy(() => import('./components/SystemBlueprints'));
+const EngineeringPhilosophy = lazy(() => import('./components/EngineeringPhilosophy'));
+const IncidentSimulator = lazy(() => import('./components/IncidentSimulator'));
+const BackendBuilderGame = lazy(() => import('./components/BackendBuilderGame'));
+const CareerSkillTree = lazy(() => import('./components/CareerSkillTree'));
+const SecretVault = lazy(() => import('./components/SecretVault'));
 
 export default function App() {
   const [portfolioData, setPortfolioData] = useState({
@@ -14,6 +53,7 @@ export default function App() {
     achievements: []
   });
   const [loading, setLoading] = useState(true);
+  const [portfolioMode, setPortfolioMode] = useState('visual'); // 'visual', 'technical', 'recruiter'
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,24 +76,150 @@ export default function App() {
     fetchData();
   }, []);
 
+  if (portfolioMode === 'recruiter') {
+    return (
+      <div className="app-wrapper" style={{ backgroundColor: '#f1f5f9' }}>
+        <Navbar recruiterMode={portfolioMode} onToggleRecruiterMode={(mode) => setPortfolioMode(mode)} />
+        <main style={{ marginTop: '80px' }}>
+          <RecruiterModeView onToggleBack={() => setPortfolioMode('visual')} />
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="app-wrapper">
-      <Navbar />
+      {/* Scroll progress + side nav dots */}
+      <ScrollProgress />
+      <Navbar recruiterMode={portfolioMode} onToggleRecruiterMode={(mode) => setPortfolioMode(mode)} />
       
+      {/* Decoupled Event-Driven Gamified XP & Quests Status Display */}
+      <QuestTracker />
+
       <main>
         <Hero />
         
-        {/* Render Sections with fetched data */}
+        {/* Achievements Counter Panel */}
         <Dashboard achievements={portfolioData.achievements} />
+
+        {/* NEW: Achievement Trophy Room with 3D flip cards */}
+        <AchievementTrophyRoom />
+
+        {/* NEW: 3D Isometric Career Timeline with XP gamification */}
+        <CareerTimeline3D />
+
+        {/* LeetCode stats, circular progress and active day heatmap streaks */}
+        <LeetcodeDashboard />
         
+        {/* Job chronology timeline */}
         <Experience experiences={portfolioData.experiences} />
+
+        {/* NEW: Live code showcase with real typewriter-animated snippets */}
+        <LiveCodeShowcase />
         
+        {/* Interactive Redis/Kafka system design playground */}
+        <SystemSandbox />
+
+        {/* NEW: Real-time animated architecture flow diagram */}
+        <ArchitectureFlow />
+
+        {/* NEW: Live Grafana-style production dashboard */}
+        <PerformanceDashboard />
+
+        {/* NEW: Interactive Tech Stack Decision Simulator */}
+        <TechStackComparison />
+
+        {/* NEW: How I Build Software — 6-phase workflow pipeline */}
+        <DevelopmentWorkflow />
+
+        {/* NEW: Live Interview Answer Board */}
+        <InterviewPrep />
+
+        {/* NEW: Real-time engineering activity feed */}
+        <LiveActivityFeed />
+
+        {/* IF TECHNICAL DEPTH MODE: Reveal advanced architectural sandboxes */}
+        {portfolioMode === 'technical' && (
+          <Suspense fallback={<SkeletonLoader height="400px" />}>
+            {/* Real-time Incident simulator & CI/CD deployment pipelines */}
+            <WarRoom />
+
+            {/* Failsafe Production Incident Simulator & Escape Room challenges */}
+            <IncidentSimulator />
+            
+            {/* Dynamic startup full-stack architecture planner */}
+            <BuildSimulator />
+
+            {/* Build-A-Backend scaling game stress tester */}
+            <BackendBuilderGame />
+          </Suspense>
+        )}
+        
+        {/* Projects showcases */}
         <Projects projects={portfolioData.projects} />
         
-        <Skills />
+        {/* SQL custom query terminal panel */}
+        <SqlSandbox />
+
+        {/* IF TECHNICAL DEPTH MODE: Reveal terminal and Swagger blueprints */}
+        {portfolioMode === 'technical' && (
+          <Suspense fallback={<SkeletonLoader height="400px" />}>
+            {/* Relational Database ER map & Swagger testing client explorer */}
+            <SystemBlueprints />
+
+            {/* Netflix-style Career Timeline episodes & Skill Tree explorer */}
+            <CareerSkillTree />
+
+            {/* Phosphor retro matrix terminal shell console */}
+            <TerminalSandbox />
+
+            {/* Senior Engineering values & career timeline step-by-step nodes */}
+            <EngineeringPhilosophy />
+
+            {/* Level 5 Unlock Vault panel */}
+            <SecretVault />
+          </Suspense>
+        )}
         
+        {/* Technical stack matrix with radar chart */}
+        <Skills />
+
+        {/* NEW: SVG Animated Radar Chart — skill dimensions vs avg */}
+        <SkillRadarChart />
+
+        {/* NEW: Technology Network Graph */}
+        <SkillNetworkGraph />
+
+        {/* NEW: GitHub-style 52-week activity heatmap */}
+        <GitHubHeatmap />
+
+        {/* NEW: Market salary benchmark with skill premium drivers */}
+        <SalaryBenchmark />
+
+        {/* NEW: Testimonials carousel */}
+        <TestimonialsCarousel />
+
+        {/* NEW: Download resume card */}
+        <ResumeDownload />
+
+        {/* Personal Hobbies replaced with rich multimedia showcase */}
+        <MultimediaShowcase />
+        
+        {/* Contact template forms */}
         <Contact />
       </main>
+
+      {/* Floating Recruiter AI Agent */}
+      <Chatbot />
+
+      {/* Smart Recruiter CTA floating widget */}
+      <RecruiterCTA />
+
+      {/* Premium custom magnetic cursor */}
+      <MagneticCursor />
+
+      {/* Konami Code Easter Egg — ↑↑↓↓←→←→BA */}
+      <KonamiEasterEgg />
 
       {/* Footer */}
       <footer className="footer dark-section">
@@ -73,6 +239,7 @@ export default function App() {
               <a href="#experience" className="footer-link">Experience</a>
               <a href="#projects" className="footer-link">Projects</a>
               <a href="#skills" className="footer-link">Skills</a>
+              <a href="#interests" className="footer-link">Interests</a>
               <a href="#contact" className="footer-link">Contact</a>
             </div>
           </div>

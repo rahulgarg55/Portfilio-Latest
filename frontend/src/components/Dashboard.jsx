@@ -1,5 +1,6 @@
 import React from 'react';
 import { Award, Eye, Code2, Users, Trophy } from 'lucide-react';
+import Card3D from './Card3D';
 
 export default function Dashboard({ achievements = [] }) {
   // Static backup statistics in case achievements fail to load
@@ -34,8 +35,8 @@ export default function Dashboard({ achievements = [] }) {
         </p>
 
         <div className="dashboard-grid">
-          {/* Main big stats card (Solved Problems) */}
-          <div className="dash-card main-stat-card">
+          {/* Main big stats card (Solved Problems) wrapped in 3D */}
+          <Card3D className="dash-card main-stat-card" maxTilt={8}>
             <div className="main-stat-header">
               <Code2 className="main-stat-icon" size={32} />
               <span className="main-stat-tag">GEEKSFORGEEKS & LEETCODE</span>
@@ -50,12 +51,12 @@ export default function Dashboard({ achievements = [] }) {
                 <div className="progress-bar" style={{ width: '90%' }}></div>
               </div>
             </div>
-          </div>
+          </Card3D>
 
-          {/* Sub Stats Grid */}
+          {/* Sub Stats Grid wrapped in 3D */}
           <div className="sub-stats-grid">
             {statsToRender.map((stat) => (
-              <div key={stat.id} className="dash-card sub-stat-card">
+              <Card3D key={stat.id} className="dash-card sub-stat-card" maxTilt={12}>
                 <div className="sub-stat-header">
                   <div className="sub-stat-icon-wrapper">
                     {getIcon(stat.id, stat.title)}
@@ -64,7 +65,7 @@ export default function Dashboard({ achievements = [] }) {
                 </div>
                 <h3 className="sub-stat-title">{stat.title}</h3>
                 <p className="sub-stat-details">{stat.details}</p>
-              </div>
+              </Card3D>
             ))}
           </div>
         </div>
@@ -90,12 +91,13 @@ export default function Dashboard({ achievements = [] }) {
           display: flex;
           flex-direction: column;
           justify-content: space-between;
-          transition: var(--transition-normal);
+          transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+          height: 100%;
         }
 
         .dash-card:hover {
           border-color: rgba(94, 90, 209, 0.2);
-          box-shadow: 0 10px 20px -5px rgba(17, 28, 45, 0.04);
+          box-shadow: 0 12px 30px rgba(17, 28, 45, 0.08);
         }
 
         .main-stat-card {

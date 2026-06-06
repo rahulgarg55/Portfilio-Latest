@@ -1,8 +1,29 @@
 import React, { useState } from 'react';
 import { ExternalLink, Github, Folder } from 'lucide-react';
+import Card3D from './Card3D';
 
 export default function Projects({ projects = [] }) {
   const [activeFilter, setActiveFilter] = useState('All');
+  const [visitedProjects, setVisitedProjects] = useState(new Set());
+
+  const handleProjectHover = (id, title) => {
+    if (!visitedProjects.has(id)) {
+      setVisitedProjects(prev => {
+        const nextSet = new Set(prev);
+        nextSet.add(id);
+        
+        window.dispatchEvent(new CustomEvent('gain-xp', {
+          detail: {
+            amount: 10,
+            action: `Reviewed deployment specs for: ${title}`,
+            incrementKey: 'exploreProjects'
+          }
+        }));
+        
+        return nextSet;
+      });
+    }
+  };
 
   const backupProjects = [
     {
@@ -44,8 +65,26 @@ export default function Projects({ projects = [] }) {
     {
       id: 5,
       title: 'Data Warehousing Inventory Management',
-      description: 'A complete data warehousing system built from scratch with custom MySQL tables. Features role-based views for admin, suppliers, and customers with incoming/outgoing transaction tracking.',
+      description: 'A complete data warehousing system built from scratch with custom MySQL tables. Features role-based views for admin, suppliers, and customers with incoming/outgoing ledger transaction tracking.',
       tags: 'React, Express, MySQL, Material UI',
+      link: null,
+      github: 'https://github.com',
+      category: 'Full Stack'
+    },
+    {
+      id: 6,
+      title: 'Zapier, Google Calendar & Office 365 Automation',
+      description: 'Enterprise workflow automation pipeline connecting Google Calendar API and Microsoft 365 Excel/Word directories with Node.js and Zapier Webhooks for automated task triggering.',
+      tags: 'Node.js, Zapier, Webhooks, Google APIs, Microsoft 365',
+      link: null,
+      github: null,
+      category: 'Integrations'
+    },
+    {
+      id: 7,
+      title: 'Food Store E-Commerce Platform',
+      description: 'A full-featured food ordering application with shopping cart functionalities, custom payment gateway processing, and role-based restaurant admin management consoles.',
+      tags: 'React, Node.js, Express, MongoDB, Payment APIs',
       link: null,
       github: 'https://github.com',
       category: 'Full Stack'
@@ -86,7 +125,12 @@ export default function Projects({ projects = [] }) {
         {/* Projects Grid */}
         <div className="card-grid">
           {filteredProjects.map((project) => (
-            <div key={project.id} className="card project-card">
+            <Card3D 
+              key={project.id} 
+              className="card project-card" 
+              maxTilt={10}
+              onMouseEnter={() => handleProjectHover(project.id, project.title)}
+            >
               <div className="project-card-header">
                 <div className="project-icon-wrapper">
                   <Folder size={20} className="project-icon" />
@@ -116,7 +160,7 @@ export default function Projects({ projects = [] }) {
               </div>
 
               <div className="project-category-badge">{project.category}</div>
-            </div>
+            </Card3D>
           ))}
         </div>
       </div>
@@ -162,6 +206,7 @@ export default function Projects({ projects = [] }) {
         .project-card {
           min-height: 280px;
           background-color: #ffffff;
+          height: 100%;
         }
 
         .project-card-header {

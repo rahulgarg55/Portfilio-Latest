@@ -150,6 +150,24 @@ INSERT INTO projects (title, description, tags, link, github, category, sort_ord
     'https://github.com',
     'Full Stack',
     5
+),
+(
+    'Zapier, Google Calendar & Office 365 Automation',
+    'Enterprise workflow automation pipeline connecting Google Calendar API and Microsoft 365 Excel/Word directories with Node.js and Zapier Webhooks for automated task triggering.',
+    'Node.js, Zapier, Webhooks, Google APIs, Microsoft 365',
+    NULL,
+    NULL,
+    'Integrations',
+    6
+),
+(
+    'Food Store E-Commerce Platform',
+    'A full-featured food ordering application with shopping cart functionalities, custom payment gateway processing, and role-based restaurant admin management consoles.',
+    'React, Node.js, Express, MongoDB, Payment APIs',
+    NULL,
+    'https://github.com',
+    'Full Stack',
+    7
 );
 
 -- Seed Achievements

@@ -1,10 +1,36 @@
 import React, { useState } from 'react';
-import { Briefcase, Calendar, MapPin, Play } from 'lucide-react';
+import { Briefcase, Calendar, MapPin, Play, Terminal, Info } from 'lucide-react';
 
 export default function Experience({ experiences = [] }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState('logs'); // 'logs' or 'interview'
 
-  // Backup experiences matching the CV
+  // Predefined advanced interview prep details matched to Rahul's CV
+  const interviewPrep = {
+    1: {
+      pitch: "I optimized critical real-time legal and highway databases for official government portals. I also built the core WhatsApp Meta webhook integration from scratch, utilizing key-value Redis caching to reduce database overhead by 40%.",
+      architecture: `[Supreme Court / NHAI APIs] ──► [Node.js ETL Pipeline] ──► [Redis Cache (Metadata Check)] ──► [MySQL Government DB]
+                                       │
+                              [Meta WhatsApp Webhooks]`,
+      bug: "Webhook concurrency bottleneck: During high traffic, multiple WhatsApp delivery statuses and user messages arrived out-of-order, causing race conditions in message status. I resolved this by introducing a Redis-based distributed locking mechanism with unique message-signature IDs to queue events.",
+      stackReason: "Node.js was selected for its non-blocking event-driven loop, ideal for webhook event-handling. MySQL was chosen for strict government relational schemas and ACID transaction compliance."
+    },
+    2: {
+      pitch: "I led a 4-developer team to construct BastaxCasino, a high-volume European iGaming platform. I architected the transactional schemas, built 100+ REST APIs, and configured microservices using Kafka message streams and Nginx reverse proxies to achieve 99.9% uptime.",
+      architecture: `[React UI / Admin Panels] ──► [Nginx Reverse Proxy] ──► [Express Gateways] ──► [Kafka Queue] ──► [Banking Microservices]
+                                                                                                    │
+                                                                                              [MongoDB / Redis]`,
+      bug: "Multi-player concurrent bet calculations caused database locks and transaction timeouts. I resolved this by decoupling the bet-placement API from the transaction writer using Apache Kafka as an event queue, allowing asynchronous processing without database congestion.",
+      stackReason: "MongoDB provided flexible document schemas needed for rapid slot game metadata changes. Kafka message queues decoupled banking microservices to protect transactions from spike traffic."
+    },
+    3: {
+      pitch: "I designed and deployed a full-stack data warehousing system from the ground up using MySQL. I designed a secure Role-Based Access Control (RBAC) database ledger to log transaction streams for admins, suppliers, and customers.",
+      architecture: `[React Dashboard] ──► [Express APIs] ──► [MySQL RBAC Ledger] (Incoming/Outgoing Streams)`,
+      bug: "Inventory double-spend errors: If two customers bought the same product stock simultaneously, inventory numbers drifted into negative values. I resolved this by applying SQL transaction queries using 'SELECT ... FOR UPDATE' to locks rows until completion.",
+      stackReason: "MySQL was selected to guarantee absolute transactional consistency for incoming/outgoing inventory records and strict relation mapping between suppliers and customers."
+    }
+  };
+
   const backupExperiences = [
     {
       id: 1,
@@ -55,6 +81,7 @@ export default function Experience({ experiences = [] }) {
 
   const experienceList = experiences.length > 0 ? experiences : backupExperiences;
   const currentExp = experienceList[activeIndex] || experienceList[0];
+  const currentPrep = interviewPrep[currentExp?.id || 1];
 
   return (
     <section id="experience" className="experience-section dark-section">
@@ -63,7 +90,7 @@ export default function Experience({ experiences = [] }) {
         <span className="section-tag" style={{ color: 'var(--accent-lavender)' }}>Interactive Pipeline</span>
         <h2 className="section-title light">Professional Chronology</h2>
         <p className="section-subtitle light">
-          Click the pipeline execution nodes on the left to inspect logs, technical contributions, and system deployments.
+          Click the pipeline execution nodes on the left to inspect logs, technical contributions, and interview prep deep-dives.
         </p>
 
         <div className="pipeline-container">
@@ -79,7 +106,10 @@ export default function Experience({ experiences = [] }) {
                 {/* Interactive Node Point */}
                 <button
                   className={`rail-node ${index === activeIndex ? 'active' : ''}`}
-                  onClick={() => setActiveIndex(index)}
+                  onClick={() => {
+                    setActiveIndex(index);
+                    // Retain selection tab
+                  }}
                   aria-label={`Select job at ${exp.company}`}
                 >
                   <div className="rail-node-indicator">
@@ -97,18 +127,29 @@ export default function Experience({ experiences = [] }) {
           {/* Details Pane (Inspection Log Window) */}
           <div className="pipeline-terminal">
             <div className="terminal-header">
-              <div className="terminal-actions">
-                <span className="terminal-dot red"></span>
-                <span className="terminal-dot yellow"></span>
-                <span className="terminal-dot green"></span>
+              <div className="terminal-tabs">
+                <button 
+                  className={`terminal-tab-btn ${activeTab === 'logs' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('logs')}
+                >
+                  <Terminal size={12} />
+                  <span>Terminal Logs</span>
+                </button>
+                <button 
+                  className={`terminal-tab-btn ${activeTab === 'interview' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('interview')}
+                >
+                  <Info size={12} />
+                  <span>Interview Deep-Dive</span>
+                </button>
               </div>
-              <div className="terminal-title">inspection-logs // {currentExp?.company}</div>
               <div className="terminal-run">
                 <Play size={10} style={{ marginRight: '4px' }} /> RUNNING
               </div>
             </div>
             
             <div className="terminal-body">
+              {/* Job Header */}
               <div className="job-header-details">
                 <div className="job-role-info">
                   <h3 className="job-role">{currentExp?.role}</h3>
@@ -127,17 +168,45 @@ export default function Experience({ experiences = [] }) {
                 </div>
               </div>
 
-              <div className="job-log-output">
-                <div className="log-line-prefix">system_log_output:</div>
-                <ul className="log-bullets">
-                  {currentExp?.description.map((bullet, i) => (
-                    <li key={i} className="log-bullet-item">
-                      <span className="log-arrow">&gt;</span>
-                      <p>{bullet}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {/* Tab Content 1: Terminal Logs */}
+              {activeTab === 'logs' && (
+                <div className="job-log-output">
+                  <div className="log-line-prefix">system_log_output:</div>
+                  <ul className="log-bullets">
+                    {currentExp?.description.map((bullet, i) => (
+                      <li key={i} className="log-bullet-item">
+                        <span className="log-arrow">&gt;</span>
+                        <p>{bullet}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Tab Content 2: Interview Deep-Dive */}
+              {activeTab === 'interview' && currentPrep && (
+                <div className="interview-deep-dive-panel">
+                  <div className="interview-section-block">
+                    <span className="prep-label">🎤 2-Minute Interview Pitch:</span>
+                    <p className="prep-content italic">"{currentPrep.pitch}"</p>
+                  </div>
+
+                  <div className="interview-section-block">
+                    <span className="prep-label">🧱 Data Pipeline & Architecture:</span>
+                    <pre className="prep-diagram"><code>{currentPrep.architecture}</code></pre>
+                  </div>
+
+                  <div className="interview-section-block">
+                    <span className="prep-label">🚨 Most Complex Concurrency Bug Solved:</span>
+                    <p className="prep-content">{currentPrep.bug}</p>
+                  </div>
+
+                  <div className="interview-section-block">
+                    <span className="prep-label">🔬 Tech Stack Selection Justification:</span>
+                    <p className="prep-content">{currentPrep.stackReason}</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -281,32 +350,40 @@ export default function Experience({ experiences = [] }) {
         .terminal-header {
           background-color: rgba(0, 0, 0, 0.2);
           border-bottom: 1px solid rgba(245, 243, 239, 0.04);
-          padding: 14px 20px;
+          padding: 8px 16px;
           display: flex;
           align-items: center;
           justify-content: space-between;
         }
 
-        .terminal-actions {
+        .terminal-tabs {
           display: flex;
-          gap: 6px;
+          gap: 12px;
         }
 
-        .terminal-dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          display: inline-block;
-        }
-
-        .terminal-dot.red { background-color: #ef4444; }
-        .terminal-dot.yellow { background-color: #eab308; }
-        .terminal-dot.green { background-color: #22c55e; }
-
-        .terminal-title {
-          font-family: var(--font-mono);
-          font-size: 12px;
+        .terminal-tab-btn {
+          background: none;
+          border: none;
           color: var(--text-muted-light);
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-family: var(--font-sans);
+          font-size: 12px;
+          cursor: pointer;
+          padding: 6px 12px;
+          border-radius: 4px;
+          transition: var(--transition-fast);
+        }
+
+        .terminal-tab-btn:hover {
+          color: var(--text-light);
+          background-color: rgba(245, 243, 239, 0.04);
+        }
+
+        .terminal-tab-btn.active {
+          color: var(--accent-lavender);
+          background-color: rgba(160, 175, 238, 0.1);
         }
 
         .terminal-run {
@@ -323,7 +400,7 @@ export default function Experience({ experiences = [] }) {
 
         .terminal-body {
           padding: 40px;
-          max-height: 500px;
+          max-height: 540px;
           overflow-y: auto;
         }
 
@@ -407,6 +484,57 @@ export default function Experience({ experiences = [] }) {
           font-size: 14px;
           line-height: 1.6;
           color: var(--text-muted-light);
+        }
+
+        /* Interview Deep Dive Tab */
+        .interview-deep-dive-panel {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          animation: fadeIn 0.3s ease;
+        }
+
+        .interview-section-block {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+
+        .prep-label {
+          font-family: var(--font-mono);
+          font-size: 11px;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          color: var(--accent-lavender);
+        }
+
+        .prep-content {
+          font-size: 14px;
+          line-height: 1.5;
+          color: var(--text-muted-light);
+        }
+
+        .prep-content.italic {
+          font-style: italic;
+          color: var(--text-light);
+          border-left: 2px solid var(--accent-purple);
+          padding-left: 12px;
+        }
+
+        .prep-diagram {
+          background-color: rgba(0, 0, 0, 0.2);
+          border: 1px solid rgba(245, 243, 239, 0.05);
+          padding: 12px;
+          border-radius: 6px;
+          overflow-x: auto;
+        }
+
+        .prep-diagram code {
+          font-family: var(--font-mono);
+          font-size: 11px;
+          color: #a0afee;
+          line-height: 1.4;
+          white-space: pre;
         }
 
         @media (max-width: 900px) {
