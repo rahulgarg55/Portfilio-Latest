@@ -1,0 +1,247 @@
+/* Snorkel.ai-inspired Design System */
+:root {
+  /* Color Palette */
+  --bg-primary: #f5f3ef;      /* Warm premium off-white/beige */
+  --bg-secondary: #f1efe9;    /* Deep warm off-white */
+  --bg-dark: #111c2d;         /* Deep slate navy */
+  --bg-darker: #0e1725;       /* Deeper slate navy for headers/cards */
+  
+  --text-dark: #111c2d;       /* Dark text */
+  --text-light: #f5f3ef;      /* Light text */
+  --text-muted-dark: rgba(17, 28, 45, 0.65);
+  --text-muted-light: rgba(245, 243, 239, 0.65);
+  
+  --accent-purple: #5e5ad1;   /* Modern technical violet-purple */
+  --accent-lavender: #a0afee; /* Soft slate lavender/blue */
+  
+  --border-color: rgba(17, 28, 45, 0.08);
+  --border-color-light: rgba(245, 243, 239, 0.08);
+  
+  /* Fonts */
+  --font-sans: 'Geist Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'Geist Mono', 'Courier New', Courier, monospace;
+  
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--bg-primary);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(17, 28, 45, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-purple);
+}
+
+/* Common Layout Utilities */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 0;
+}
+
+/* Section Header Tags (Snorkel Style) */
+.section-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-purple);
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.section-title {
+  font-size: 42px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-dark);
+  margin-bottom: 24px;
+}
+
+.section-title.light {
+  color: var(--text-light);
+}
+
+.section-subtitle {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-muted-dark);
+  max-width: 650px;
+  margin-bottom: 48px;
+}
+
+.section-subtitle.light {
+  color: var(--text-muted-light);
+}
+
+/* Button Styling (Snorkel Style Pill Shape) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 100px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  border-color: var(--bg-dark);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-purple);
+  border-color: var(--accent-purple);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(94, 90, 209, 0.2);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-dark);
+  border-color: rgba(17, 28, 45, 0.16);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(17, 28, 45, 0.04);
+  border-color: var(--text-dark);
+  transform: translateY(-2px);
+}
+
+.btn-dark {
+  background-color: var(--accent-purple);
+  color: var(--text-light);
+  border-color: var(--accent-purple);
+}
+
+.btn-dark:hover {
+  background-color: var(--accent-lavender);
+  color: var(--bg-dark);
+  border-color: var(--accent-lavender);
+  transform: translateY(-2px);
+}
+
+/* Grid & Cards (Snorkel Style) */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 32px;
+  transition: var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-purple), var(--accent-lavender));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition-normal);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(94, 90, 209, 0.24);
+  box-shadow: 0 12px 24px -10px rgba(17, 28, 45, 0.08);
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+/* dark modes */
+.dark-section {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+}
+
+/* animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(94, 90, 209, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(94, 90, 209, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(94, 90, 209, 0); }
+}
+
+/* Responsive design adjustments */
+@media (max-width: 992px) {
+  .section-title {
+    font-size: 36px;
+  }
+  .container {
+    padding: 60px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 32px;
+  }
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  .container {
+    width: 92%;
+    padding: 48px 0;
+  }
+}
