@@ -34,7 +34,8 @@ export default function SqlSandbox() {
     const t0 = performance.now();
 
     try {
-      const response = await fetch('/api/query', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${API_BASE_URL}/api/query`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

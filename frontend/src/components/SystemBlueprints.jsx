@@ -74,7 +74,8 @@ export default function SystemBlueprints() {
     setTimeout(async () => {
       try {
         if (apiPath === 'GET /api/portfolio') {
-          const res = await fetch('/api/portfolio');
+          const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+          const res = await fetch(`${API_BASE_URL}/api/portfolio`);
           const data = await res.json();
           setApiResponse(JSON.stringify(data, null, 2));
         } else if (apiPath === 'POST /api/query') {
@@ -82,7 +83,8 @@ export default function SystemBlueprints() {
           try {
             queryObj = JSON.parse(apiPayload);
           } catch (e) {}
-          const res = await fetch('/api/query', {
+          const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+          const res = await fetch(`${API_BASE_URL}/api/query`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(queryObj)
@@ -94,7 +96,8 @@ export default function SystemBlueprints() {
           try {
             contactObj = JSON.parse(apiPayload);
           } catch (e) {}
-          const res = await fetch('/api/contact', {
+          const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+          const res = await fetch(`${API_BASE_URL}/api/contact`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(contactObj)

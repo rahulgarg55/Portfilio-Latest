@@ -58,7 +58,8 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/api/portfolio');
+        const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+        const response = await fetch(`${API_BASE_URL}/api/portfolio`);
         if (!response.ok) throw new Error('Failed to fetch data');
         const result = await response.json();
         
