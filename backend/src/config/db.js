@@ -186,7 +186,12 @@ try {
     database: process.env.DB_NAME || 'rahul_portfolio',
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
+    ...(process.env.DB_SSL === 'true' && {
+      ssl: {
+        rejectUnauthorized: false
+      }
+    })
   });
 
   // Test connection immediately to trigger fallback if MySQL server is down
