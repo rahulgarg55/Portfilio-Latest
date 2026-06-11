@@ -62,6 +62,8 @@ export const getPortfolioData = async (req, res) => {
       }
     });
   }
+};
+
 export const getSpotlightData = async (req, res) => {
   try {
     if (isFallbackMode) {
