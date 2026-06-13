@@ -289,7 +289,7 @@ export default function IncidentSimulator() {
         }
 
         .inc-tab-btn {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 6px;
           padding: 8px 16px;
@@ -313,7 +313,7 @@ export default function IncidentSimulator() {
         }
 
         .incident-scenario-card {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 12px;
           padding: 24px;
@@ -427,7 +427,7 @@ export default function IncidentSimulator() {
         }
 
         .telemetry-stats-card {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           padding: 24px;
         }
 

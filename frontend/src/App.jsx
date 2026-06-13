@@ -1,4 +1,5 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Dashboard from './components/Dashboard';
@@ -47,35 +48,29 @@ const CareerSkillTree = lazy(() => import('./components/CareerSkillTree'));
 const SecretVault = lazy(() => import('./components/SecretVault'));
 
 export default function App() {
-  const [portfolioData, setPortfolioData] = useState({
+  const fetchPortfolioData = async () => {
+    const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+    const response = await fetch(`${API_BASE_URL}/api/portfolio`);
+    if (!response.ok) throw new Error('Failed to fetch data');
+    const result = await response.json();
+    if (!result.success || !result.data) throw new Error('Invalid data format');
+    return result;
+  };
+
+  const { data: queryData, isLoading: loading, isError } = useQuery({
+    queryKey: ['portfolioData'],
+    queryFn: fetchPortfolioData,
+    retry: 2,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+  });
+
+  const portfolioData = queryData?.data || {
     experiences: [],
     projects: [],
     achievements: []
-  });
-  const [loading, setLoading] = useState(true);
-  const [portfolioMode, setPortfolioMode] = useState('visual'); // 'visual', 'technical', 'recruiter'
+  };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const API_BASE_URL = import.meta.env.VITE_API_URL || '';
-        const response = await fetch(`${API_BASE_URL}/api/portfolio`);
-        if (!response.ok) throw new Error('Failed to fetch data');
-        const result = await response.json();
-        
-        if (result.success && result.data) {
-          setPortfolioData(result.data);
-          console.log(`Fetched portfolio data successfully. Source: ${result.source}`);
-        }
-      } catch (error) {
-        console.error('Error fetching API portfolio data. Using fallback local arrays:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const [portfolioMode, setPortfolioMode] = useState('visual');
 
   if (portfolioMode === 'recruiter') {
     return (

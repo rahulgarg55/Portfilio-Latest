@@ -84,7 +84,7 @@ export default function Dashboard({ achievements = [] }) {
         }
 
         .dash-card {
-          background: #ffffff;
+          background: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 12px;
           padding: 32px;

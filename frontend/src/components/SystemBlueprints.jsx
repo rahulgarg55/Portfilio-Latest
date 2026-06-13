@@ -373,7 +373,7 @@ export default function SystemBlueprints() {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 6px;
           padding: 10px 16px;
@@ -393,15 +393,15 @@ export default function SystemBlueprints() {
         .blue-tab-btn.active {
           background-color: var(--accent-purple);
           border-color: var(--accent-purple);
-          color: #ffffff;
+          color: var(--text-light);
         }
 
         .blueprints-body-card {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 12px;
           padding: 30px;
-          box-shadow: 0 4px 16px rgba(17, 28, 45, 0.02);
+          box-shadow: 0 4px 16px rgba(17, 28, 45, 0.2);
           min-height: 380px;
         }
 

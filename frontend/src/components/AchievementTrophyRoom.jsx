@@ -238,7 +238,7 @@ export default function AchievementTrophyRoom() {
         }
 
         .trophy-card {
-          background: #fff;
+          background: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 16px;
           padding: 24px;
@@ -376,7 +376,7 @@ export default function AchievementTrophyRoom() {
 
         /* Detail panel */
         .trophy-detail-panel {
-          background: #fff;
+          background: var(--bg-darker);
           border: 2px solid;
           border-radius: 16px;
           padding: 24px;

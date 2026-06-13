@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ExternalLink, Github, Folder } from 'lucide-react';
 import Card3D from './Card3D';
+import DOMPurify from 'dompurify';
+import { motion } from 'framer-motion';
 
 export default function Projects({ projects = [] }) {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -102,7 +104,13 @@ export default function Projects({ projects = [] }) {
 
   return (
     <section id="projects" className="projects-section">
-      <div className="container">
+      <motion.div 
+        className="container"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.6 }}
+      >
         <span className="section-tag">Case Studies</span>
         <h2 className="section-title">Production Deployments</h2>
         <p className="section-subtitle">
@@ -151,7 +159,10 @@ export default function Projects({ projects = [] }) {
               </div>
 
               <h3 className="project-title">{project.title}</h3>
-              <p className="project-description">{project.description}</p>
+              <p 
+                className="project-description" 
+                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project.description) }}
+              ></p>
               
               <div className="project-tech-tags">
                 {project.tags.split(',').map((tag, idx) => (
@@ -163,7 +174,7 @@ export default function Projects({ projects = [] }) {
             </Card3D>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       <style>{`
         .projects-section {
@@ -179,7 +190,7 @@ export default function Projects({ projects = [] }) {
         }
 
         .filter-btn {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 100px;
           padding: 8px 18px;
@@ -205,7 +216,7 @@ export default function Projects({ projects = [] }) {
 
         .project-card {
           min-height: 280px;
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           height: 100%;
         }
 
@@ -242,7 +253,7 @@ export default function Projects({ projects = [] }) {
           align-items: center;
           justify-content: center;
           transition: var(--transition-fast);
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
         }
 
         .project-action-btn:hover {
@@ -292,7 +303,7 @@ export default function Projects({ projects = [] }) {
           font-size: 9px;
           text-transform: uppercase;
           letter-spacing: 0.1em;
-          color: rgba(17, 28, 45, 0.3);
+          color: rgba(255, 255, 255, 0.3);
           pointer-events: none;
         }
       `}</style>

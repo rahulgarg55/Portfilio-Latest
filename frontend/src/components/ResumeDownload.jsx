@@ -283,7 +283,7 @@ Professional Singer 🎤 | State-Level Badminton Player 🏸 | Guitarist 🎸 | 
         }
 
         .resume-preview-card {
-          background: #fff;
+          background: var(--bg-darker);
           border: 1px solid rgba(17,28,45,0.1);
           border-radius: 16px;
           padding: 24px;

@@ -1,5 +1,6 @@
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
+import logger from '../utils/logger.js';
 
 dotenv.config();
 
@@ -196,12 +197,12 @@ try {
 
   // Test connection immediately to trigger fallback if MySQL server is down
   await pool.query('SELECT 1');
-  console.log('Successfully connected to MySQL database: ' + (process.env.DB_NAME || 'rahul_portfolio'));
+  logger.info('Successfully connected to MySQL database: ' + (process.env.DB_NAME || 'rahul_portfolio'));
 } catch (error) {
-  console.warn('\n⚠️  WARNING: Could not connect to MySQL database.');
-  console.warn('Reason:', error.message);
-  console.warn('🔌 ACTIVATING RUNTIME MOCK DATABASE FALLBACK.');
-  console.warn('The application will serve predefined CV data from memory. All submissions will be logged to the console.\n');
+  logger.warn('\n⚠️  WARNING: Could not connect to MySQL database.');
+  logger.warn('Reason: ' + error.message);
+  logger.warn('🔌 ACTIVATING RUNTIME MOCK DATABASE FALLBACK.');
+  logger.warn('The application will serve predefined CV data from memory. All submissions will be logged to the console.\n');
   isFallbackMode = true;
 }
 

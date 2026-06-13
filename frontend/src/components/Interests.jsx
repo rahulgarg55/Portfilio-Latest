@@ -154,7 +154,7 @@ export default function Interests() {
         }
 
         .interest-card {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           padding: 24px;
           min-height: 180px;
           height: 100%;

@@ -341,7 +341,7 @@ export default function QuestTracker() {
         }
 
         .quest-panel-card {
-          background: #ffffff;
+          background: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 16px;
           width: 100%;
@@ -400,7 +400,7 @@ export default function QuestTracker() {
         }
 
         .recruiter-status-card {
-          background: #ffffff;
+          background: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 12px;
           padding: 16px;
@@ -457,7 +457,7 @@ export default function QuestTracker() {
         }
 
         .quest-item-card {
-          background: #ffffff;
+          background: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 10px;
           padding: 14px;
@@ -523,7 +523,7 @@ export default function QuestTracker() {
         }
 
         .quest-panel-footer {
-          background: #ffffff;
+          background: var(--bg-darker);
           border-top: 1px solid var(--border-color);
           padding: 16px 24px;
           display: flex;

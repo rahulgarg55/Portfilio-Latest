@@ -200,7 +200,7 @@ const publishBet = async (betPayload) => {
         }
 
         .season-btn {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 4px;
           padding: 8px 16px;
@@ -238,7 +238,7 @@ const publishBet = async (betPayload) => {
         }
 
         .ep-card {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           padding: 24px;
         }
 

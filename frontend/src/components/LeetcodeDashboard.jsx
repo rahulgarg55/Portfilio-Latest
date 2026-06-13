@@ -303,7 +303,7 @@ export default function LeetcodeDashboard() {
 
         /* Left Stats Panel */
         .leetcode-stats-panel {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 12px;
           padding: 24px;
@@ -615,7 +615,7 @@ export default function LeetcodeDashboard() {
 
         /* Right panel (Contest summary card) */
         .contest-card {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           padding: 30px;
           min-height: 380px;
           height: 100%;

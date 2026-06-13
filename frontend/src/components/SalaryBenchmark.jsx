@@ -298,7 +298,7 @@ export default function SalaryBenchmark() {
 
         /* Skill premium */
         .skill-premium-panel {
-          background: #fff;
+          background: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 14px;
           padding: 24px;

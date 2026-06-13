@@ -1,21 +1,21 @@
-/* Snorkel.ai-inspired Design System */
+/* Snorkel.ai + Cyberpunk Modern Design System */
 :root {
-  /* Color Palette */
-  --bg-primary: #f5f3ef;      /* Warm premium off-white/beige */
-  --bg-secondary: #f1efe9;    /* Deep warm off-white */
-  --bg-dark: #111c2d;         /* Deep slate navy */
-  --bg-darker: #0e1725;       /* Deeper slate navy for headers/cards */
+  /* Color Palette - Vibrant Dark Theme */
+  --bg-primary: #0a0f1a;      /* Deep space black */
+  --bg-secondary: #121b2b;    /* Slightly lighter deep blue */
+  --bg-dark: #070b12;         /* Pure dark background */
+  --bg-darker: #04060a;       /* Darkest background */
   
-  --text-dark: #111c2d;       /* Dark text */
-  --text-light: #f5f3ef;      /* Light text */
-  --text-muted-dark: rgba(17, 28, 45, 0.65);
-  --text-muted-light: rgba(245, 243, 239, 0.65);
+  --text-dark: #f0f4f8;       /* Light text for dark theme */
+  --text-light: #ffffff;      /* Pure white */
+  --text-muted-dark: rgba(240, 244, 248, 0.7);
+  --text-muted-light: rgba(255, 255, 255, 0.65);
   
-  --accent-purple: #5e5ad1;   /* Modern technical violet-purple */
-  --accent-lavender: #a0afee; /* Soft slate lavender/blue */
+  --accent-purple: #8a2be2;   /* Vibrant blue-violet */
+  --accent-lavender: #00e5ff; /* Cyan/Neon blue for contrast */
   
-  --border-color: rgba(17, 28, 45, 0.08);
-  --border-color-light: rgba(245, 243, 239, 0.08);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border-color-light: rgba(255, 255, 255, 0.05);
   
   /* Fonts */
   --font-sans: 'Geist Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -44,6 +44,7 @@ html {
 
 body {
   overflow-x: hidden;
+  padding-top: 80px; /* Fix for fixed navbar overlapping content */
 }
 
 /* Custom Scrollbar */
@@ -140,13 +141,14 @@ body {
 
 .btn-secondary {
   background-color: transparent;
-  color: var(--text-dark);
-  border-color: rgba(17, 28, 45, 0.16);
+  color: var(--text-light);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .btn-secondary:hover {
-  background-color: rgba(17, 28, 45, 0.04);
-  border-color: var(--text-dark);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-lavender);
+  color: var(--accent-lavender);
   transform: translateY(-2px);
 }
 

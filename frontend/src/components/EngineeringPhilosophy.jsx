@@ -167,7 +167,7 @@ export default function EngineeringPhilosophy() {
         }
 
         .value-card {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           padding: 20px 24px;
         }
 
@@ -189,7 +189,7 @@ export default function EngineeringPhilosophy() {
           display: flex;
           flex-direction: column;
           gap: 20px;
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 12px;
           padding: 24px;

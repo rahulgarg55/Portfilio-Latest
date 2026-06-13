@@ -286,7 +286,7 @@ export default function TechStackComparison() {
         }
 
         .comparison-arena {
-          background: #fff;
+          background: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 16px;
           padding: 32px;

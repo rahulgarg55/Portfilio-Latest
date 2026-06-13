@@ -264,7 +264,7 @@ export default function RecruiterCTA() {
           border: 1px solid var(--border-color);
         }
         .cta-btn.secondary:hover {
-          background: #fff;
+          background: var(--bg-darker);
           border-color: var(--accent-purple);
           color: var(--accent-purple);
           transform: translateY(-1px);

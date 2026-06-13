@@ -203,7 +203,7 @@ export default function CareerTimeline3D() {
         /* XP bar */
         .xp-progress-bar-container {
           margin-bottom: 40px;
-          background: #fff;
+          background: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 12px;
           padding: 20px 24px;
@@ -249,7 +249,7 @@ export default function CareerTimeline3D() {
           width: 14px;
           height: 14px;
           border-radius: 50%;
-          background: #fff;
+          background: var(--text-light);
           box-shadow: 0 0 8px currentColor;
         }
 
@@ -310,7 +310,7 @@ export default function CareerTimeline3D() {
         .iso-top {
           width: 64px;
           height: 64px;
-          background: #fff;
+          background: var(--bg-darker);
           border: 2px solid var(--border-color);
           border-radius: 10px;
           display: flex;
@@ -322,7 +322,7 @@ export default function CareerTimeline3D() {
 
         .iso-node.active .iso-top {
           border-color: var(--ev-color);
-          background: white;
+          background: var(--bg-darker);
           box-shadow: 0 8px 20px var(--ev-color, rgba(0,0,0,0.15)), 0 0 0 2px var(--ev-color);
         }
 
@@ -393,11 +393,11 @@ export default function CareerTimeline3D() {
 
         /* Event Detail Panel */
         .event-detail-panel {
-          background: #fff;
+          background: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 16px;
           overflow: hidden;
-          box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.2);
           animation: fadeIn 0.3s ease;
         }
 

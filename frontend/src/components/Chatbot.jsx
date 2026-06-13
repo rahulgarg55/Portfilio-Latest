@@ -236,7 +236,7 @@ export default function Chatbot() {
           right: 0;
           width: 360px;
           height: 480px;
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 16px;
           box-shadow: 0 12px 32px rgba(17, 28, 45, 0.15);
@@ -336,7 +336,7 @@ export default function Chatbot() {
         }
 
         .chat-bubble.bot {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           color: var(--text-dark);
           border-top-left-radius: 2px;
@@ -388,7 +388,7 @@ export default function Chatbot() {
         }
 
         .prompt-chip {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 100px;
           padding: 6px 12px;
@@ -411,7 +411,7 @@ export default function Chatbot() {
           display: flex;
           align-items: center;
           gap: 10px;
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border-top: 1px solid var(--border-color);
         }
 

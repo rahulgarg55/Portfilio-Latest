@@ -44,7 +44,32 @@ CREATE TABLE IF NOT EXISTS messages (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Clear existing data
+-- =========================================
+-- DATABASE OPTIMIZATION: INDEXES
+-- =========================================
+
+-- Admin Users Table for Authentication
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(50) DEFAULT 'admin',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 1. SINGLE INDEX (Speeds up queries filtering by category)
+CREATE INDEX idx_projects_category ON projects(category);
+
+-- 2. COMPOUND INDEX (Speeds up sorting by order and ID together)
+CREATE INDEX idx_experiences_sort ON experiences(sort_order, id);
+CREATE INDEX idx_projects_sort ON projects(sort_order, id);
+CREATE INDEX idx_achievements_sort ON achievements(sort_order, id);
+
+-- 3. FULL-TEXT INDEX (Speeds up text search across title and description)
+-- Note: MySQL supports FULLTEXT on TEXT/VARCHAR columns.
+CREATE FULLTEXT INDEX ft_idx_projects_search ON projects(title, description);
+
+-- Clear existing data (Note: Do not truncate users automatically)
 TRUNCATE TABLE experiences;
 TRUNCATE TABLE projects;
 TRUNCATE TABLE achievements;

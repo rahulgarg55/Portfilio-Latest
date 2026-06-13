@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Github, Linkedin, Youtube } from 'lucide-react';
+import { Menu, X, Github, Linkedin, Youtube, Users } from 'lucide-react';
+import { io } from 'socket.io-client';
 
 export default function Navbar({ recruiterMode, onToggleRecruiterMode }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +18,16 @@ export default function Navbar({ recruiterMode, onToggleRecruiterMode }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const [visitors, setVisitors] = useState(1);
+  useEffect(() => {
+    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const socket = io(API_BASE_URL);
+    socket.on('visitor_count', (count) => {
+      setVisitors(count);
+    });
+    return () => socket.disconnect();
+  }, []);
+
   return (
     <nav className={`nav ${scrolled ? 'nav-scrolled' : ''}`}>
       <div className="nav-container">
@@ -31,6 +42,11 @@ export default function Navbar({ recruiterMode, onToggleRecruiterMode }) {
           <a href="#projects" className="nav-link">Projects</a>
           <a href="#skills" className="nav-link">Skills</a>
           <a href="#contact" className="nav-link">Contact</a>
+          
+          <div className="live-visitors">
+            <Users size={14} />
+            <span>{visitors} Live</span>
+          </div>
         </div>
 
         {/* Social Actions */}
@@ -137,7 +153,7 @@ export default function Navbar({ recruiterMode, onToggleRecruiterMode }) {
         }
 
         .nav-scrolled {
-          background-color: rgba(245, 243, 239, 0.85);
+          background-color: rgba(10, 15, 26, 0.85); /* Dark bg-primary equivalent */
           backdrop-filter: blur(12px);
           border-bottom: 1px solid var(--border-color);
           height: 70px;
@@ -179,6 +195,21 @@ export default function Navbar({ recruiterMode, onToggleRecruiterMode }) {
 
         .nav-link:hover {
           color: var(--accent-purple);
+        }
+
+        .live-visitors {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          background: rgba(16, 185, 129, 0.1);
+          color: #10b981;
+          padding: 4px 10px;
+          border-radius: 100px;
+          font-family: var(--font-mono);
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.05em;
+          border: 1px solid rgba(16, 185, 129, 0.2);
         }
 
         .nav-actions {
@@ -262,7 +293,7 @@ export default function Navbar({ recruiterMode, onToggleRecruiterMode }) {
         /* Segmented Mode Controller */
         .mode-segmented-control {
           display: flex;
-          background-color: rgba(17, 28, 45, 0.05);
+          background-color: rgba(255, 255, 255, 0.05);
           border: 1px solid var(--border-color);
           border-radius: 100px;
           padding: 3px;

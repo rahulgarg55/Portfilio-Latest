@@ -152,7 +152,7 @@ export default function MagneticCursor() {
         .cursor-dot.hovering {
           width: 4px;
           height: 4px;
-          background: #fff;
+          background: var(--bg-darker);
         }
 
         .cursor-dot.clicking {

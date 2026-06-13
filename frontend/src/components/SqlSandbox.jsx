@@ -225,7 +225,7 @@ export default function SqlSandbox() {
         }
 
         .sandbox-presets-panel {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 12px;
           padding: 24px;
@@ -351,7 +351,7 @@ export default function SqlSandbox() {
 
         /* Outputs */
         .sandbox-output-panel {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 12px;
           padding: 24px;

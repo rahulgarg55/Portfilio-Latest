@@ -366,11 +366,11 @@ export default function Contact() {
 
         /* Map and Outreach container */
         .outreach-map-container {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 12px;
           padding: 20px;
-          box-shadow: 0 4px 12px rgba(17, 28, 45, 0.02);
+          box-shadow: 0 4px 12px rgba(17, 28, 45, 0.2);
         }
 
         .map-tabs {
@@ -436,11 +436,11 @@ export default function Contact() {
 
         /* Form styling */
         .contact-form-panel {
-          background-color: #ffffff;
+          background-color: var(--bg-darker);
           border: 1px solid var(--border-color);
           border-radius: 12px;
           padding: 40px;
-          box-shadow: 0 10px 30px -10px rgba(17, 28, 45, 0.03);
+          box-shadow: 0 10px 30px -10px rgba(17, 28, 45, 0.3);
         }
 
         .template-pills-area {
@@ -510,7 +510,9 @@ export default function Contact() {
           font-family: var(--font-sans);
           font-size: 14px;
           padding: 12px 16px;
-          border: 1px solid rgba(17, 28, 45, 0.12);
+          background-color: var(--bg-secondary);
+          color: var(--text-light);
+          border: 1px solid var(--border-color);
           border-radius: 6px;
           outline: none;
           transition: var(--transition-fast);

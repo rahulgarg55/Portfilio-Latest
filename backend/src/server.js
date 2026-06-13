@@ -5,11 +5,18 @@ import helmet from 'helmet';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import client from 'prom-client';
+import logger from './utils/logger.js';
 import apiRouter from './routes/api.js';
+import authRouter from './routes/auth.js';
+import session from 'express-session';
+import passport from './config/passport.js';
+import { Server } from 'socket.io';
+import { createServer } from 'http';
 
 dotenv.config();
 
 const app = express();
+const httpServer = createServer(app);
 const PORT = process.env.PORT || 5000;
 
 // Prometheus metrics setup
@@ -40,9 +47,45 @@ app.use(cors({
   credentials: true
 }));
 
+// Socket.IO for real-time visitor counter
+const io = new Server(httpServer, {
+  cors: {
+    origin: allowedOrigins,
+    methods: ['GET', 'POST'],
+    credentials: true
+  }
+});
+
+let activeVisitors = 0;
+io.on('connection', (socket) => {
+  activeVisitors++;
+  io.emit('visitor_count', activeVisitors);
+
+  socket.on('disconnect', () => {
+    activeVisitors--;
+    io.emit('visitor_count', activeVisitors);
+  });
+});
+
 app.use(express.json());
 
+// Session setup
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'super-secret-key-for-portfolio',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { 
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    httpOnly: true
+  }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Routes
+app.use('/auth', authRouter);
 app.use('/api', apiRouter);
 
 // Metrics route for Prometheus
@@ -56,6 +99,6 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', timestamp: new Date() });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Portfolio backend server running on port ${PORT}`);
+httpServer.listen(PORT, () => {
+  logger.info(`🚀 Portfolio backend server running on port ${PORT}`);
 });

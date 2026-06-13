@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Briefcase, Calendar, MapPin, Play, Terminal, Info } from 'lucide-react';
+import DOMPurify from 'dompurify';
+import { motion } from 'framer-motion';
 
 export default function Experience({ experiences = [] }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -86,7 +88,13 @@ export default function Experience({ experiences = [] }) {
   return (
     <section id="experience" className="experience-section dark-section">
       <div className="experience-grid-overlay"></div>
-      <div className="container">
+      <motion.div 
+        className="container"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6 }}
+      >
         <span className="section-tag" style={{ color: 'var(--accent-lavender)' }}>Interactive Pipeline</span>
         <h2 className="section-title light">Professional Chronology</h2>
         <p className="section-subtitle light">
@@ -176,7 +184,7 @@ export default function Experience({ experiences = [] }) {
                     {currentExp?.description.map((bullet, i) => (
                       <li key={i} className="log-bullet-item">
                         <span className="log-arrow">&gt;</span>
-                        <p>{bullet}</p>
+                        <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(bullet) }}></p>
                       </li>
                     ))}
                   </ul>
@@ -210,7 +218,7 @@ export default function Experience({ experiences = [] }) {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <style>{`
         .experience-section {
